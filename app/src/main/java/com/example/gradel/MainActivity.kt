@@ -3,6 +3,7 @@
 package com.example.gradel
 
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -82,9 +83,9 @@ fun TampilLayout(
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ) {
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(5.dp)
         ) {
             TampilForm()
         }
@@ -95,6 +96,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
     var textalm by remember { mutableStateOf("") }
+    var textEmail by remember { mutableStateOf("") }
     val context = LocalContext.current
     val dataForm: DataForm
     val uiState by cobaViewModel.uiState.collectAsState()
@@ -118,6 +120,14 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         onValueChange = {textTlp = it}
     )
     OutlinedTextField(
+        value = textEmail,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email")},
+        onValueChange = {textEmail = it}
+    )
+    OutlinedTextField(
         value = textalm,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
@@ -135,8 +145,8 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         Text(text = stringResource(R.string.submit),
             fontSize = 16.sp)
     }
-    Spacer(modifier = Modifier.height(100.dp))
-    TextHasil(namanya = cobaViewModel.namaUsr, telponnya = cobaViewModel.noTlp, alamatnya = cobaViewModel.alamat, jenisnya = cobaViewModel.jenisKl)
+    Spacer(modifier = Modifier.height(50.dp))
+    TextHasil(namanya = cobaViewModel.namaUsr, telponnya = cobaViewModel.noTlp, alamatnya = cobaViewModel.alamat, jenisnya = cobaViewModel.jenisKl, emailnya = cobaViewModel.Setatus)
 
 }
 @Composable
@@ -213,7 +223,7 @@ fun SelectJK(
 }
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, alamatnya: String, jenisnya: String) {
+fun TextHasil(namanya: String, telponnya: String, alamatnya: String, jenisnya: String, emailnya: String) {
     ElevatedCard( modifier = Modifier
         .height(200.dp)
         .width(350.dp), elevation = CardDefaults.cardElevation( defaultElevation = 6.dp)) {
