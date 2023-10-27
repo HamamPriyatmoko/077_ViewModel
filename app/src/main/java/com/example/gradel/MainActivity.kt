@@ -145,7 +145,7 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         Text(text = stringResource(R.string.submit),
             fontSize = 16.sp)
     }
-    Spacer(modifier = Modifier.height(50.dp))
+    Spacer(modifier = Modifier.height(30.dp))
     TextHasil(namanya = cobaViewModel.namaUsr, telponnya = cobaViewModel.noTlp, alamatnya = cobaViewModel.alamat, jenisnya = cobaViewModel.jenisKl, emailnya = cobaViewModel.Setatus)
 
 }
@@ -238,6 +238,9 @@ fun TextHasil(namanya: String, telponnya: String, alamatnya: String, jenisnya: S
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
             )
         Text(text = "Jenis kelamin: " + jenisnya,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+        )
+        Text(text = "Email: " + emailnya,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
         )
     }
