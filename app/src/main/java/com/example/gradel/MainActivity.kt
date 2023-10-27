@@ -127,6 +127,10 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         label = { Text(text = "Email")},
         onValueChange = {textEmail = it}
     )
+    SelectJK(options = jenis.map { id -> context.resources.getString(id)},
+        onSelectionChanged = {cobaViewModel.setJenisK(it)})
+    status(options = Status.map { id -> context.resources.getString(id)},
+        onSelectionChanged = {cobaViewModel.setStatus(it)})
     OutlinedTextField(
         value = textalm,
         singleLine = true,
@@ -135,10 +139,6 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         label = { Text(text = "Alamat")},
         onValueChange = {textalm = it}
     )
-    SelectJK(options = jenis.map { id -> context.resources.getString(id)},
-        onSelectionChanged = {cobaViewModel.setJenisK(it)})
-    status(options = Status.map { id -> context.resources.getString(id)},
-        onSelectionChanged = {cobaViewModel.setStatus(it)})
     Button(modifier = Modifier.fillMaxWidth(),
         onClick = { cobaViewModel.insertData(textNama, textTlp, textalm, dataForm.sex, dataForm.sts) }
     ) {
@@ -156,7 +156,7 @@ fun status(options: List<String>,
     var selectedValue by rememberSaveable {
         mutableStateOf("")}
 
-    Column (modifier = Modifier.padding(16.dp)
+    Row (modifier = Modifier.padding(16.dp)
     ){
         Text(
             text = "Status:",
@@ -215,8 +215,7 @@ fun SelectJK(
                         onSelectionChanged(item)
                     }
                 )
-                Text(text = item
-                )
+                Text(text = item)
             }
         }
     }
