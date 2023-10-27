@@ -35,14 +35,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gradel.Data.DataForm
+import com.example.gradel.Data.DataSource.Status
 import com.example.gradel.Data.DataSource.jenis
 import com.example.gradel.ui.theme.GradelTheme
 
@@ -112,7 +115,8 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Telpon")},
-        onValueChange = {textTlp = it})
+        onValueChange = {textTlp = it}
+    )
     OutlinedTextField(
         value = textalm,
         singleLine = true,
@@ -123,8 +127,10 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     )
     SelectJK(options = jenis.map { id -> context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
+    status(options = Status.map { id -> context.resources.getString(id)},
+        onSelectionChanged = {cobaViewModel.setStatus(it)})
     Button(modifier = Modifier.fillMaxWidth(),
-        onClick = { cobaViewModel.insertData(textNama, textTlp, textalm, dataForm.sex) }
+        onClick = { cobaViewModel.insertData(textNama, textTlp, textalm, dataForm.sex, dataForm.sts) }
     ) {
         Text(text = stringResource(R.string.submit),
             fontSize = 16.sp)
@@ -134,14 +140,20 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
 
 }
 @Composable
-fun SelectJK(
-    options: List<String>,
-    onSelectionChanged: (String) -> Unit = {}
+fun status(options: List<String>,
+           onSelectionChanged: (String) -> Unit = {}
 ){
     var selectedValue by rememberSaveable {
         mutableStateOf("")}
 
-    Column (modifier = Modifier.padding(16.dp)){
+    Column (modifier = Modifier.padding(16.dp)
+    ){
+        Text(
+            text = "Status:",
+            color = Color.Black,
+            textAlign = TextAlign.Left
+        )
+
         options.forEach{ item ->
             Row(
                 modifier = Modifier.selectable(
@@ -159,6 +171,42 @@ fun SelectJK(
                     }
                 )
                 Text(text = item)
+            }
+        }
+    }
+}
+@Composable
+fun SelectJK(
+    options: List<String>,
+    onSelectionChanged: (String) -> Unit = {}
+){
+    var selectedValue by rememberSaveable {
+        mutableStateOf("")}
+
+    Column (modifier = Modifier.padding(20.dp)){
+        Text(
+            text = "Jenis Kelamin:",
+            color = Color.Black,
+            textAlign = TextAlign.Left
+        )
+        options.forEach{ item ->
+            Row(
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                RadioButton(selected = selectedValue == item,
+                    onClick = {selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                )
+                Text(text = item
+                )
             }
         }
     }

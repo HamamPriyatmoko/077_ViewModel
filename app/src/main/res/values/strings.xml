@@ -2,6 +2,7 @@
     <string name="app_name">gradel</string>
     <string name="laki">Laki-Laki</string>
     <string name="wanita">Perempuan</string>
-    <string name="wanita2">Perempuan</string>
+    <string name="belum">Belum Menikah</string>
+    <string name="sudah">Menikah</string>
     <string name="submit">Submit</string>
 </resources>
