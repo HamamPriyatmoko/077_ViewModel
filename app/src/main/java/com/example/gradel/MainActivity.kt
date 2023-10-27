@@ -78,6 +78,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun TampilLayout(
     modifier: Modifier = Modifier
 ){
+
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
@@ -101,6 +102,11 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()){
     val dataForm: DataForm
     val uiState by cobaViewModel.uiState.collectAsState()
     dataForm = uiState
+    Text(
+        text = "Register",
+        color = Color.Black,
+        textAlign = TextAlign.Left
+    )
 
     OutlinedTextField(
         value = textNama,
@@ -155,14 +161,14 @@ fun status(options: List<String>,
 ){
     var selectedValue by rememberSaveable {
         mutableStateOf("")}
+    Text(
+        text = "Status:",
+        color = Color.Black,
+        textAlign = TextAlign.Left
+    )
 
     Row (modifier = Modifier.padding(16.dp)
     ){
-        Text(
-            text = "Status:",
-            color = Color.Black,
-            textAlign = TextAlign.Left
-        )
 
         options.forEach{ item ->
             Row(
@@ -193,12 +199,14 @@ fun SelectJK(
     var selectedValue by rememberSaveable {
         mutableStateOf("")}
 
-    Column (modifier = Modifier.padding(20.dp)){
         Text(
             text = "Jenis Kelamin:",
             color = Color.Black,
-            textAlign = TextAlign.Left
+            textAlign = TextAlign.Center
         )
+
+    Row (modifier = Modifier.padding(25.dp)){
+
         options.forEach{ item ->
             Row(
                 modifier = Modifier.selectable(
